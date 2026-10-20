@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>게시글 목록</title>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+	<div class="container">
+		<h1>게시글 목록</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th class="center" style="width: 80px;">번호</th>
+					<th>제목</th>
+					<th class="center" style="width: 120px;">작성자</th>
+					<th class="center" style="width: 160px;">등록일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${#lists.isEmpty(postList)}">
+					<td colspan="4" class="empty">등록된 게시글이 없습니다.</td>
+				</tr>
+				<tr th:each="post : ${postList}">
+					<td class="center" th:text="${post.postNo}">1</td>
+					<td>
+						<!-- 제목 클릭 시 /Post/read?PostNo=글번호 로 이동 -->
+						<a th:href="@{/Post/read(PostNo=${post.postNo})}" th:text="${post.title}">제목</a>
+					</td>
+					<td class="center" th:text="${post.writer}">작성자</td>
+					<td class="center" th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm')}">2026-01-01</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="actions">
+			<a class="btn btn-gray" th:href="@{/}">메인</a>
+			<a class="btn btn-primary" th:href="@{/Post/insert}">글쓰기</a>
+		</div>
+	</div>
+</body>
+</html>

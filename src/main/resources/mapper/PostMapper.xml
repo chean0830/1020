@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : 매퍼 인터페이스의 전체 경로 -->
+<mapper namespace="com.example.board.mapper.PostMapper">
+
+	<!-- 게시글 목록 (최신 글이 위로) -->
+	<select id="list" resultType="Post">
+		SELECT post_no, title, writer, content, reg_date, upd_date
+		  FROM post
+		 ORDER BY post_no DESC
+	</select>
+
+	<!-- 게시글 조회 -->
+	<select id="select" resultType="Post">
+		SELECT post_no, title, writer, content, reg_date, upd_date
+		  FROM post
+		 WHERE post_no = #{postNo}
+	</select>
+
+	<!-- 게시글 등록 (생성된 글번호를 post.postNo 에 담는다) -->
+	<insert id="insert" parameterType="Post" useGeneratedKeys="true" keyProperty="postNo">
+		INSERT INTO post (title, writer, content)
+		VALUES (#{title}, #{writer}, #{content})
+	</insert>
+
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="Post">
+		UPDATE post
+		   SET title    = #{title},
+		       writer   = #{writer},
+		       content  = #{content},
+		       upd_date = NOW()
+		 WHERE post_no = #{postNo}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		DELETE FROM post
+		 WHERE post_no = #{postNo}
+	</delete>
+
+</mapper>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>게시글 수정</title>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+	<div class="container">
+		<h1>게시글 수정</h1>
+
+		<form id="updateForm" th:action="@{/Post/update}" method="post" th:object="${post}">
+			<input type="hidden" th:field="*{postNo}">
+			<div class="form-row">
+				<label>글번호</label>
+				<input type="text" th:value="*{postNo}" readonly>
+			</div>
+			<div class="form-row">
+				<label for="title">제목</label>
+				<input type="text" th:field="*{title}" maxlength="200" required>
+			</div>
+			<div class="form-row">
+				<label for="writer">작성자</label>
+				<input type="text" th:field="*{writer}" maxlength="50" required>
+			</div>
+			<div class="form-row">
+				<label for="content">내용</label>
+				<textarea th:field="*{content}" required></textarea>
+			</div>
+
+			<div class="actions">
+				<button type="submit" class="btn btn-primary">수정</button>
+				<button type="button" class="btn btn-danger" id="btnDelete">삭제</button>
+				<a class="btn btn-gray" th:href="@{/Post/list}">목록</a>
+			</div>
+		</form>
+	</div>
+
+	<script th:inline="javascript">
+		// [삭제] 버튼 - AJAX(fetch)로 DELETE 요청을 보내고, 성공하면 목록으로 이동한다.
+		const postNo = /*[[${post.postNo}]]*/ 0;
+		const deleteUrl = /*[[@{/Post/delete/}]]*/ '/Post/delete/';
+		const listUrl = /*[[@{/Post/list}]]*/ '/Post/list';
+
+		document.getElementById('btnDelete').addEventListener('click', async () => {
+			if (!confirm('정말 삭제하시겠습니까?')) return;
+			try {
+				const response = await fetch(deleteUrl + postNo, { method: 'DELETE' });
+				if (!response.ok) throw new Error(response.status);
+				alert('삭제되었습니다.');
+				location.href = listUrl;
+			} catch (e) {
+				alert('삭제에 실패했습니다. (' + e.message + ')');
+			}
+		});
+	</script>
+</body>
+</html>

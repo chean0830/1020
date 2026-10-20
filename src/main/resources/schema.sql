@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS post (
+    post_no     INT          NOT NULL AUTO_INCREMENT COMMENT '글번호',
+    title       VARCHAR(200) NOT NULL COMMENT '제목',
+    writer      VARCHAR(50)  NOT NULL COMMENT '작성자',
+    content     TEXT         NOT NULL COMMENT '내용',
+    reg_date    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    upd_date    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일',
+    PRIMARY KEY (post_no)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;

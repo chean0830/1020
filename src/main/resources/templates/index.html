@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>메인</title>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+	<div class="container">
+		<h1>Spring Boot 게시판</h1>
+		<p>MyBatis · Thymeleaf · MySQL 로 만든 게시판입니다.</p>
+		<div class="actions" style="justify-content: flex-start;">
+			<a class="btn btn-primary" th:href="@{/Post/list}">게시글 목록</a>
+		</div>
+	</div>
+</body>
+</html>
