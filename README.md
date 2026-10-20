@@ -1,4 +1,4 @@
-# Post_TEST_LimChaeEun — Spring Boot MVC 게시판
+# 1020 — Spring Boot MVC 게시판
 
 Spring Boot · MyBatis · Thymeleaf · MySQL 로 만든 게시판입니다.
 게시글 **등록 · 목록(페이징) · 조회 · 수정 · 삭제(AJAX)** 를 구현했습니다.
