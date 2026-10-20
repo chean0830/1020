@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.board.dto.Page;
 import com.example.board.dto.Post;
 import com.example.board.mapper.PostMapper;
 
@@ -23,8 +24,13 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> list() {
-		return postMapper.list();
+	public int count() {
+		return postMapper.count();
+	}
+
+	@Override
+	public List<Post> list(Page page) {
+		return postMapper.list(page);
 	}
 
 	@Override

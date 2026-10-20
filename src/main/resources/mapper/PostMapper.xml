@@ -6,11 +6,18 @@
 <!-- namespace : 매퍼 인터페이스의 전체 경로 -->
 <mapper namespace="com.example.board.mapper.PostMapper">
 
-	<!-- 게시글 목록 (최신 글이 위로) -->
-	<select id="list" resultType="Post">
+	<!-- 전체 게시글 수 (페이징) -->
+	<select id="count" resultType="int">
+		SELECT COUNT(*)
+		  FROM post
+	</select>
+
+	<!-- 게시글 목록 (페이징, 최신 글이 위로) -->
+	<select id="list" parameterType="Page" resultType="Post">
 		SELECT post_no, title, writer, content, reg_date, upd_date
 		  FROM post
 		 ORDER BY post_no DESC
+		 LIMIT #{offset}, #{size}
 	</select>
 
 	<!-- 게시글 조회 -->

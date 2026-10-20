@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.board.dto.Page;
 import com.example.board.dto.Post;
 import com.example.board.service.PostService;
 
@@ -30,11 +31,18 @@ public class PostController {
 		this.postService = postService;
 	}
 
-	/** 게시글 목록 */
+	/** 한 페이지에 보여줄 게시글 수 */
+	private static final int PAGE_SIZE = 10;
+
+	/** 게시글 목록 (페이징) - /Post/list?page=2 */
 	@GetMapping("/list")
-	public String list(Model model) {
-		List<Post> postList = postService.list();
+	public String list(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+		int totalCount = postService.count();
+		Page paging = new Page(page, PAGE_SIZE, totalCount);
+		List<Post> postList = postService.list(paging);
+
 		model.addAttribute("postList", postList);
+		model.addAttribute("page", paging);
 		return "Post/list";
 	}
 

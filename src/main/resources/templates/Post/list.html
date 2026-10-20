@@ -34,6 +34,24 @@
 			</tbody>
 		</table>
 
+		<!-- 페이징 : [처음] [이전] 1 2 3 4 5 [다음] [끝] -->
+		<div class="paging" th:if="${page.totalCount > 0}">
+			<a th:href="@{/Post/list(page=1)}">처음</a>
+			<a th:if="${page.prev}" th:href="@{/Post/list(page=${page.startPage - 1})}">이전</a>
+			<span th:unless="${page.prev}" class="disabled">이전</span>
+
+			<th:block th:each="no : ${#numbers.sequence(page.startPage, page.endPage)}">
+				<span th:if="${no == page.page}" class="current" th:text="${no}">1</span>
+				<a th:unless="${no == page.page}" th:href="@{/Post/list(page=${no})}" th:text="${no}">2</a>
+			</th:block>
+
+			<a th:if="${page.next}" th:href="@{/Post/list(page=${page.endPage + 1})}">다음</a>
+			<span th:unless="${page.next}" class="disabled">다음</span>
+			<a th:href="@{/Post/list(page=${page.totalPages})}">끝</a>
+		</div>
+		<p class="meta" style="text-align:center; margin-top:8px;"
+		   th:text="|전체 ${page.totalCount}건 · ${page.page} / ${page.totalPages} 페이지|">전체 0건</p>
+
 		<div class="actions">
 			<a class="btn btn-gray" th:href="@{/}">메인</a>
 			<a class="btn btn-primary" th:href="@{/Post/insert}">글쓰기</a>

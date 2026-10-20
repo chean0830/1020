@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.board.dto.Page;
 import com.example.board.dto.Post;
 
 /**
@@ -12,8 +13,11 @@ import com.example.board.dto.Post;
 @Mapper
 public interface PostMapper {
 
-	// 게시글 목록
-	List<Post> list();
+	// 전체 게시글 수 (페이징)
+	int count();
+
+	// 게시글 목록 (페이징)
+	List<Post> list(Page page);
 
 	// 게시글 조회
 	Post select(int postNo);
